@@ -69,20 +69,39 @@ export class MemStorage implements IStorage {
         audioUrl: "/audio/vowels.mp3"
       },
       {
-        title: "Basic Grammar - Subject Pronouns",
+        title: "Basic Grammar - Sentence Construction",
         type: "grammar",
         content: JSON.stringify({
-          rules: ["నేను (nenu) - I", "నువ్వు (nuvvu) - You", "అతను (atanu) - He", "ఆమె (aame) - She", "మనం (manam) - We"],
-          examples: ["నేను వెళ్తాను - I will go", "నువ్వు వస్తావు - You will come"]
+          rules: [
+            "Telugu follows Subject-Object-Verb (SOV) word order",
+            "Subject (కర్త) comes first: నేను (I), నువ్వు (you), అతను (he)",
+            "Object (కర్మ) comes second: పుస్తకం (book), ఆపిల్ (apple)",
+            "Verb (క్రియ) comes last: చదువుతున్నాను (reading), తింటున్నాను (eating)",
+            "Time expressions usually come at the beginning"
+          ],
+          examples: [
+            "నేను పుస్తకం చదువుతున్నాను - I am reading a book",
+            "అతను ఆపిల్ తింటున్నాడు - He is eating an apple",
+            "నిన్న నేను సినిమా చూశాను - Yesterday I watched a movie",
+            "నువ్వు బడికి వెళ్తున్నావు - You are going to school",
+            "ఆమె టీవీ చూస్తోంది - She is watching TV"
+          ]
         }),
         order: 3,
-        audioUrl: "/audio/pronouns.mp3"
+        audioUrl: "/audio/grammar.mp3"
       }
     ];
 
     initialLessons.forEach(lesson => {
       const id = this.currentLessonId++;
-      this.lessons.set(id, { id, ...lesson });
+      this.lessons.set(id, { 
+        id, 
+        title: lesson.title,
+        type: lesson.type,
+        content: lesson.content,
+        order: lesson.order,
+        audioUrl: lesson.audioUrl || null
+      });
     });
   }
 
