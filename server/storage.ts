@@ -25,30 +25,64 @@ export class MemStorage implements IStorage {
   private initializeData() {
     const initialLessons: InsertLesson[] = [
       {
-        title: "Telugu Alphabet - Vowels",
+        title: "Telugu Alphabet - Overview",
         type: "alphabet",
         content: JSON.stringify({
-          characters: ["అ", "ఆ", "ఇ", "ఈ", "ఉ", "ఊ"],
-          descriptions: ["a", "aa", "i", "ee", "u", "oo"]
+          characters: [
+            "క", "ఖ", "గ", "ఘ", "ఙ",
+            "చ", "ఛ", "జ", "ఝ", "ఞ",
+            "ట", "ఠ", "డ", "ఢ", "ణ",
+            "త", "థ", "ద", "ధ", "న",
+            "ప", "ఫ", "బ", "భ", "మ",
+            "య", "ర", "ల", "వ", "శ", 
+            "ష", "స", "హ", "ళ", "క్ష"
+          ],
+          descriptions: [
+            "ka", "kha", "ga", "gha", "nga",
+            "ca", "cha", "ja", "jha", "nya",
+            "ta", "tha", "da", "dha", "na",
+            "ta", "tha", "da", "dha", "na",
+            "pa", "pha", "ba", "bha", "ma",
+            "ya", "ra", "la", "va", "sa",
+            "sha", "sa", "ha", "la", "ksha"
+          ]
         }),
         order: 1,
+        audioUrl: "/audio/alphabet.mp3"
+      },
+      {
+        title: "Telugu Vowels",
+        type: "alphabet",
+        content: JSON.stringify({
+          characters: [
+            "అ", "ఆ", "ఇ", "ఈ", "ఉ", "ఊ",
+            "ఋ", "ౠ", "ఎ", "ఏ", "ఐ",
+            "ఒ", "ఓ", "ఔ", "అం", "అః"
+          ],
+          descriptions: [
+            "a", "aa", "i", "ee", "u", "oo",
+            "ru", "ruu", "e", "ee", "ai",
+            "o", "oo", "au", "am", "aha"
+          ]
+        }),
+        order: 2,
         audioUrl: "/audio/vowels.mp3"
       },
       {
         title: "Basic Grammar - Subject Pronouns",
         type: "grammar",
         content: JSON.stringify({
-          rules: ["నేను (nenu) - I", "నువ్వు (nuvvu) - You", "అతను (atanu) - He"],
-          examples: ["నేను వెళ్తాను - I will go"]
+          rules: ["నేను (nenu) - I", "నువ్వు (nuvvu) - You", "అతను (atanu) - He", "ఆమె (aame) - She", "మనం (manam) - We"],
+          examples: ["నేను వెళ్తాను - I will go", "నువ్వు వస్తావు - You will come"]
         }),
-        order: 2,
+        order: 3,
         audioUrl: "/audio/pronouns.mp3"
       }
     ];
 
     initialLessons.forEach(lesson => {
       const id = this.currentLessonId++;
-      this.lessons.set(id, { ...lesson, id });
+      this.lessons.set(id, { id, ...lesson });
     });
   }
 
