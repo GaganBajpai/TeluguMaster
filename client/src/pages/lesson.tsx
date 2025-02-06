@@ -3,7 +3,35 @@ import { useParams, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { TeluguCharacter } from "@/components/TeluguCharacter";
 import { playAudio } from "@/lib/audio";
+import { Volume } from "lucide-react";
 import type { Lesson } from "@shared/schema";
+
+interface ClickableWordProps {
+  telugu: string;
+  english: string;
+  audioUrl?: string;
+}
+
+function ClickableWord({ telugu, english, audioUrl }: ClickableWordProps) {
+  const handleClick = () => {
+    if (audioUrl) {
+      playAudio(audioUrl);
+    }
+  };
+
+  return (
+    <span 
+      className="cursor-pointer inline-flex items-center gap-1 group"
+      onClick={handleClick}
+    >
+      <span className="font-telugu">{telugu}</span>
+      {audioUrl && (
+        <Volume className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+      )}
+      <span className="text-gray-600">({english})</span>
+    </span>
+  );
+}
 
 export default function LessonPage() {
   const { id } = useParams();
@@ -41,6 +69,7 @@ export default function LessonPage() {
                 key={idx}
                 character={char}
                 description={content.descriptions[idx]}
+                audioUrl={`/audio/characters/${char}.mp3`}
               />
             ))}
           </div>
@@ -55,9 +84,18 @@ export default function LessonPage() {
             ))}
             <div className="mt-6">
               <h3 className="font-semibold mb-2">Examples:</h3>
-              {content.examples.map((example: string, idx: number) => (
-                <p key={idx} className="text-gray-700 mb-2">{example}</p>
-              ))}
+              {content.examples.map((example: string, idx: number) => {
+                const [telugu, english] = example.split(" - ");
+                return (
+                  <div key={idx} className="mb-2">
+                    <ClickableWord 
+                      telugu={telugu} 
+                      english={english}
+                      audioUrl={`/audio/sentences/${telugu}.mp3`}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -66,7 +104,7 @@ export default function LessonPage() {
       <div className="flex gap-4">
         {lesson.audioUrl && (
           <Button onClick={handlePlayAudio}>
-            Play Audio
+            Play Full Audio
           </Button>
         )}
         <Button onClick={handlePractice} variant="secondary">

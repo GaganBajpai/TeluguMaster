@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { LessonCard } from "@/components/LessonCard";
 import { ProgressBar } from "@/components/ProgressBar";
-import type { Lesson } from "@shared/schema";
+import type { Lesson, Progress } from "@shared/schema";
 
 export default function Home() {
   const { data: lessons, isLoading } = useQuery<Lesson[]>({
     queryKey: ["/api/lessons"],
   });
 
-  const { data: progress } = useQuery({
+  const { data: progress } = useQuery<Progress[]>({
     queryKey: ["/api/progress"],
   });
 
@@ -26,7 +26,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
         Learn Telugu
       </h1>
-      
+
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Your Progress</h2>
         <ProgressBar progress={progressPercent} />
